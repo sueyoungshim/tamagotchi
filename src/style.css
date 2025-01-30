@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+html,
+body,
+#root
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: ivory;
+}
+
+@font-face {
+    font-family: 'pixel';
+    src: url('/perfect-dos-vga.ttf');
+}
+
+.r3f
+{
+    touch-action: none;
+}
