@@ -2,7 +2,14 @@
 
 @font-face {
     font-family: 'pixel';
-    src: url('/Minecraft.ttf');
+    /* src: url('/04b-30.ttf'); */
+    /* src: url('/atc.ttf'); */
+    /* src: url('/daydream.ttf'); */
+    /* src: url('/gumball.ttf'); */
+    /* src: url('/minecraft.ttf'); */
+    /* src: url('/perfect-dos-vga.ttf'); */
+    src: url('/pixeled.ttf');
+    src: url('/vcr-osd-mono.ttf');
 }
 
 html,
@@ -15,6 +22,14 @@ body,
     width: 100%;
     height: 100%;
     background: white;
+}
+
+.sprite
+{
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    width: 256px; /* Scale up while keeping pixelated look */
+    height: 256px;
 }
 
 .r3f, 
