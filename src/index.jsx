@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
 import { gsap } from 'gsap'
@@ -14,9 +14,29 @@ const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 const App = () => {
 
+  const headerRef = useRef()
+  const gifRef = useRef()
+
+  const handleGIFLoad = () => {
+    console.log('gif loaded');
+    setTimeout(() => {
+      headerRef.current.style.opacity = 1
+    }, 2600);
+  }
+  
+  useEffect(() => {
+    const gifElement = gifRef.current
+    gifElement.onload = handleGIFLoad
+  
+    return () => {
+      gifElement.onload = null // Clean up the event listener
+    }
+  }, [])
+  
+
   useGSAP(() => {
     gsap.to('.test', { 
-      rotation: 180,
+      rotation: 360,
       scrollTrigger: {
         trigger: '.test',
         start: 'bottom bottom',
@@ -26,39 +46,6 @@ const App = () => {
         scroller: '.content'
       },
     })
-
-    const tl = gsap.timeline({
-      // scrollTrigger: {
-      //   trigger: '.sprite',
-      //   start: 'bottom bottom',
-      //   end: 'top 20%',
-      //   scrub: true,
-      //   markers: true,
-      //   scroller: '.content',
-      // },
-    })
-
-    // Alternate between sprite images 1.png and 2.png three times
-    tl
-    .to('.birth1', {
-      duration: 0,
-      opacity: 1,
-      delay: 0,
-    })
-    .to('.birth2', {
-      duration: 0,
-      opacity: 1,
-      delay: 1,
-    })
-    .to('.birth3', {
-      duration: 0,
-      opacity: 1,
-      delay: 2
-    })
-    .to('.tamagotchi', {
-      duration: 0,
-      opacity: 1, 
-    })
   }, null)
 
   return (
@@ -66,23 +53,22 @@ const App = () => {
       <div className='content'>
 
         <div className='h-screen'>
-          <h1 className='tamagotchi relative text-center text-7xl opacity-0'>
+          <h1 className='tamagotchi relative text-center text-7xl opacity-0' ref={headerRef}>
             TAMAGOTCHI tamagotchi
           </h1>
-          {/* <div className='spriteContainer relative'>
-            <img src='sprite/birth/1.png' className='sprite birth1 absolute opacity-0'/>
-            <img src='sprite/birth/2.png' className='sprite birth2 absolute opacity-0'/>
-            <img src='sprite/birth/3.png' className='sprite birth3 absolute opacity-0'/>
-          </div> */}
-          <img src='sprite/birth/birth.gif' className='sprite'/>
-
+          <img 
+            src='sprite/birth/birth.gif' 
+            className='sprite display-block mx-auto bottom-0 pointer-events-none'
+            ref={gifRef}
+          />
         </div>
 
         <div name='digital-pet' className='h-screen bg-blue-50'>
           <h2 className='text-center'>DIGITAL PET digital pet</h2>
-          <h4 className='test'>
-            Tamagotchi (Japanese: たまごっち, IPA: [tamaɡotꜜtɕi], 'Egg Watch') is a brand of handheld digital pets that was created in Japan by Akihiro Yokoi of WiZ and Aki Maita of Bandai.
-            Japanese words tamago (たまご), which means 'egg', and uotchi (ウオッチ) 'watch'.
+          <h4 className='test tamagotchi-equation'>
+            <p><span className="japanese">tamago たまご</span> <span className="meaning">egg</span></p>
+            <p>+ <span className="japanese">uotchi ウオッチ</span> <span className="meaning">watch</span></p>
+            <p>= <span className="added">tamagotchi たまごっち</span> <span className="meaning">digital pet</span></p>
           </h4>
         </div>
 
@@ -116,7 +102,7 @@ const App = () => {
         </div>
       </div>
 
-      <Canvas
+      {/* <Canvas
         className='r3f'
         camera={{
           fov: 45,
@@ -126,7 +112,7 @@ const App = () => {
         }}
       >
         <Experience />
-      </Canvas>
+      </Canvas> */}
     </>
   )
 }
