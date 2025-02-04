@@ -19,6 +19,7 @@ const App = () => {
 
   const headerRef = useRef()
   const gifRef = useRef()
+  const typewriterRef = useRef()
 
   const handleGIFLoad = () => {
     console.log('gif loaded');
@@ -35,19 +36,39 @@ const App = () => {
       gifElement.onload = null // Clean up the event listener
     }
   }, [])
-  
 
   useGSAP(() => {
-    gsap.to('.test', { 
-      rotation: 360,
+    // GSAP GIF
+    gsap.to(gifRef.current, { 
+      rotation: 100,
       scrollTrigger: {
-        trigger: '.test',
-        start: 'bottom bottom',
-        end: 'top 20%',
+        trigger: gifRef.current,
+        start: 'top top',
+        end: '0% 100%',
         scrub: true,
-        markers: true,
         scroller: '.content'
       },
+    })
+
+    // GSAP TYPEWRITER
+    const typewriters = document.querySelectorAll('.typewriter')
+    typewriters.forEach(typewriter => {
+      gsap.to(typewriter, {
+        scrollTrigger: {
+          trigger: typewriter,
+          scroller: '.content',
+          onEnter: () => {
+            typewriter.classList.remove('typewriter')
+            void typewriter.offsetWidth
+            typewriter.classList.add('typewriter')
+          },
+          onEnterBack: () => {
+            typewriter.classList.remove('typewriter')
+            void typewriter.offsetWidth
+            typewriter.classList.add('typewriter')
+          }
+        }
+      })
     })
   }, null)
 
@@ -61,13 +82,12 @@ const App = () => {
           </h1>
           <img 
             src='sprite/birth/birth.gif' 
-            className='sprite display-block mx-auto bottom-0 pointer-events-none'
+            className='sprite display-block mx-auto pointer-events-none'
             ref={gifRef}
           />
         </div>
 
         <div name='digital-pet' className='h-screen bg-blue-50'>
-          <h2 className='text-center'>DIGITAL PET digital pet</h2>
           <h4 className='test tamagotchi-equation'>
             <p><span className="japanese">tamago たまご</span> <span className="meaning">egg</span></p>
             <p>+ <span className="japanese">uotchi ウオッチ</span> <span className="meaning">watch</span></p>
@@ -76,28 +96,25 @@ const App = () => {
         </div>
 
         <div name='feed' className='h-screen bg-blue-100'>
-          <h2 className='text-center font-bold text-7xl'>FEED feed</h2>
-          <h4>
-            
-          </h4>
+          <h2 className='typewriter text-center' ref={typewriterRef}>feed</h2>
         </div>
 
         <div name='game' className='h-screen bg-blue-150'>
-          <h2 className='text-center'>GAME game</h2>
+          <h2 className='typewriter text-center'>game</h2>
         </div>
 
         <div name='discipline' className='h-screen bg-blue-200'>
-          <h2 className='text-center'>DISCIPLINE discipline</h2>
+          <h2 className='typewriter text-center'>discipline</h2>
         </div>
 
         <div name='poop' className='h-screen bg-blue-250'>
-          <h2 className='text-center'>
-            AND POOP, ... OF COURSE and poop, ... of course
+          <h2 className='typewriter text-center'>
+            and poop, ... of course
           </h2>
         </div>
 
         <div name='customize' className='h-screen bg-blue-300'>
-          <h2 className='text-center'>CUSTOMIZE YOUR SHELL !! customize your shell !!</h2>
+          <h2 className='typewriter text-center'>customize your shell !!</h2>
         </div>
 
         <div name='adopt' className='h-screen bg-blue-350'>

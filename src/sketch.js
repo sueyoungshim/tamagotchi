@@ -21,8 +21,6 @@ export default function sketch(p5) {
     if (!p5.focused) return
     // if (p5.mouseX < 0 || p5.mouseX > p5.width || p5.mouseY < 0 || p5.mouseY > p5.height) return
 
-    console.log('draw')
-    
     let maxDist = p5.dist(0, 0, p5.width, p5.height) // Maximum distance on the canvas
   
     for (let i = 0; i < cols; i++) {
@@ -38,7 +36,7 @@ export default function sketch(p5) {
   
         // If the mouse is near, change the color to red
         if (d < gridSize * 2) { // A threshold to control how far the ripple extends
-          colors[i][j] = p5.lerpColor(colors[i][j], p5.color(255, 0, 0), lerpFactor * 0.1)
+          colors[i][j] = p5.lerpColor(colors[i][j], p5.color(255, 200, 200), lerpFactor * 0.1)
         } else {
           // Fade the color back to gray slowly
           colors[i][j] = p5.lerpColor(colors[i][j], p5.color(255), 0.05)
