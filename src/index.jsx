@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import ReactDOM from 'react-dom/client'
 import { Canvas } from '@react-three/fiber'
+import { ReactP5Wrapper } from '@p5-wrapper/react'
+import sketch from './sketch.js'
+
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -50,8 +53,8 @@ const App = () => {
 
   return (
     <>
+      <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
       <div className='content'>
-
         <div className='h-screen'>
           <h1 className='tamagotchi relative text-center text-7xl opacity-0' ref={headerRef}>
             TAMAGOTCHI tamagotchi
@@ -73,7 +76,7 @@ const App = () => {
         </div>
 
         <div name='feed' className='h-screen bg-blue-100'>
-          <h2 className='text-center'>FEED feed</h2>
+          <h2 className='text-center font-bold text-7xl'>FEED feed</h2>
           <h4>
             
           </h4>
