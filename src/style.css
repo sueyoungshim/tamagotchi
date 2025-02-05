@@ -66,8 +66,8 @@ body,
 
 .r3f
 {
-    touch-action: none;
-    z-index: -1;
+    /* touch-action: none; */
+    /* z-index: -1; */
 }
 
 .typewriter-container

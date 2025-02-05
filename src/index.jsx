@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import ReactDOM from 'react-dom/client'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useThree } from '@react-three/fiber'
 import { ReactP5Wrapper } from '@p5-wrapper/react'
 import sketch from './sketch.js'
 
@@ -18,85 +18,73 @@ const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 const App = () => {
 
-  const headerRef = useRef()
-  const gifRef = useRef()
-  const typewriterRef = useRef()
+  // const headerRef = useRef()
+  // const gifRef = useRef()
+  // const typewriterRef = useRef()
 
-  const handleGIFLoad = () => {
-    console.log('gif loaded');
-    setTimeout(() => {
-      headerRef.current.style.opacity = 1
-    }, 2600);
+  // const handleGIFLoad = () => {
+  //   console.log('gif loaded');
+  //   setTimeout(() => {
+  //     headerRef.current.style.opacity = 1
+  //   }, 2600);
+  // }
+  
+  // useEffect(() => {
+  //   const gifElement = gifRef.current
+  //   gifElement.onload = handleGIFLoad
+  
+  //   return () => {
+  //     gifElement.onload = null // Clean up the event listener
+  //   }
+  // }, [])
+
+  // useGSAP(() => {
+  //   // GSAP GIF
+  //   gsap.to(gifRef.current, { 
+  //     rotation: 100,
+  //     scrollTrigger: {
+  //       trigger: gifRef.current,
+  //       start: 'top top',
+  //       end: '0% 100%',
+  //       scrub: true,
+  //       scroller: '.content'
+  //     },
+  //   })
+
+  //   // GSAP SECTIONS
+  //   // gsap.to('.section', {
+  //   //   scrollTrigger: {
+  //   //     trigger: '.section',
+  //   //     snap: 1 / 4,
+  //   //     start: 'top top',
+  //   //     end: 'bottom bottom',
+  //   //     scroller: '.content',
+  //   //   }
+  //   // })
+  //   const tl = gsap.timeline()
+  //   tl.from('.tamagotchi', { xPercent: -100, duration: 1 })
+  //     .from('.feed', { xPercent: -100, duration: 1 })
+  //     .from('.game', { xPercent: -100, duration: 1 })
+  //     .from('.discipline', { xPercent: -100, duration: 1 })
+
+  // }, null)
+
+  const [color, setColor] = useState('#ffffff')
+  const [opacity, setOpacity] = useState(0.5)
+  const handleColorChange = (e) => {
+    setColor(e.target.value)
   }
-  
-  useEffect(() => {
-    const gifElement = gifRef.current
-    gifElement.onload = handleGIFLoad
-  
-    return () => {
-      gifElement.onload = null // Clean up the event listener
-    }
-  }, [])
-
-  useGSAP(() => {
-    // GSAP GIF
-    gsap.to(gifRef.current, { 
-      rotation: 100,
-      scrollTrigger: {
-        trigger: gifRef.current,
-        start: 'top top',
-        end: '0% 100%',
-        scrub: true,
-        scroller: '.content'
-      },
-    })
-
-    // GSAP TYPEWRITER
-    const typewriters = document.querySelectorAll('.typewriter')
-    typewriters.forEach(typewriter => {
-      gsap.to(typewriter, {
-        scrollTrigger: {
-          trigger: typewriter,
-          scroller: '.content',
-          onEnter: () => {
-            typewriter.classList.remove('typewriter')
-            void typewriter.offsetWidth
-            typewriter.classList.add('typewriter')
-          },
-          onEnterBack: () => {
-            typewriter.classList.remove('typewriter')
-            void typewriter.offsetWidth
-            typewriter.classList.add('typewriter')
-          }
-        }
-      })
-    })
-
-    // GSAP SECTIONS
-    // gsap.to('.section', {
-    //   scrollTrigger: {
-    //     trigger: '.section',
-    //     snap: 1 / 4,
-    //     start: 'top top',
-    //     end: 'bottom bottom',
-    //     scroller: '.content',
-    //   }
-    // })
-    const tl = gsap.timeline()
-    tl.from('.tamagotchi', { xPercent: -100, duration: 1 })
-      .from('.feed', { xPercent: -100, duration: 1 })
-      .from('.game', { xPercent: -100, duration: 1 })
-      .from('.discipline', { xPercent: -100, duration: 1 })
-
-  }, null)
+  const handleOpacityChange = (e) => {
+    setOpacity(e.target.value)
+  }
 
   return (
     <>
-      <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
+      {/* <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper> */}
       <div className='content'>
-        <div className='h-screen'>
-          <h1 className='tamagotchi relative text-center text-7xl opacity-0' ref={headerRef}>
-            TAMAGOTCHI tamagotchi
+        {/* <div className='h-screen'>
+          <h1 className='tamagotchi relative text-center text-7xl font-bold opacity-0' ref={headerRef}>
+            tamagotchi
           </h1>
           <img 
             src='sprite/birth/birth.gif' 
@@ -105,7 +93,7 @@ const App = () => {
           />
         </div>
 
-        <div name='digital-pet' className='h-screen'>
+        <div className='h-screen'>
           <h4 className='test tamagotchi-equation'>
             <p><span className="japanese">tamago たまご</span> <span className="meaning">egg</span></p>
             <p>+ <span className="japanese">uotchi ウオッチ</span> <span className="meaning">watch</span></p>
@@ -113,24 +101,42 @@ const App = () => {
           </h4>
         </div>
 
-        <div name='feed' className='feed section h-screen bg-blue-100'>
+        <div className='feed section h-screen bg-blue-100'>
           <Typewriter text='feed' />
         </div>
 
-        <div name='game' className='game section h-screen bg-blue-200'>
+        <div className='game section h-screen bg-blue-200'>
           <Typewriter text='game' />
         </div>
 
-        <div name='discipline' className='discipline section h-screen bg-blue-300'>
+        <div className='discipline section h-screen bg-blue-300'>
           <Typewriter text='discipline' />
         </div>
 
-        <div name='poop' className='poop section h-screen bg-blue-400'>
+        <div className='poop section h-screen bg-blue-400'>
           <Typewriter text='and poop, ... of course' />
-        </div>
+        </div> */}
 
-        <div name='customize' className='h-screen'>
+        <div className='h-screen'>
           <Typewriter text='customize your shell !!' />
+          <input type='color' onChange={handleColorChange}/>
+
+          <Canvas
+            className='r3f'
+            camera={{
+              fov: 45,
+              near: 0.1,
+              far: 2000,
+              position: [-3, 1.5, 4],
+            }}
+          >
+            {/* <mesh>
+              <boxGeometry args={ [ 1.5, 1.5, 1.5 ] } />
+              <meshMatcapMaterial color={color} opacity={opacity} />
+            </mesh> */}
+            <Experience />
+          </Canvas>
+          <canvas></canvas>
         </div>
 
         <div name='adopt' className='h-screen'>
@@ -138,17 +144,7 @@ const App = () => {
         </div>
       </div>
 
-      {/* <Canvas
-        className='r3f'
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 2000,
-          position: [-3, 1.5, 4],
-        }}
-      >
-        <Experience />
-      </Canvas> */}
+      
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -13,13 +13,21 @@ export default function Typewriter({ text, speed=0.1 })
 
   useGSAP(() => {
     const tl = gsap.timeline({
+      onComplete: () => {
+        setTimeout(() => {
+          typewriterRef.current.style.animationPlayState = 'paused'
+          typewriterRef.current.style.borderRight = 'none'
+        }, 2000);
+      },
       scrollTrigger: {
         trigger: typewriterRef.current,
         onEnter: () => {
           typewriterRef.current.innerHTML = ''
+          typewriterRef.current.style.animationPlayState = 'running'
+          typewriterRef.current.style.borderRight = '1ch solid var(--font-color)'
           tl.restart()
         },
-        markers: true,
+        // markers: true,
         scroller: '.content'
       }
     }) 
