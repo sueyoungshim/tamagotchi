@@ -4,8 +4,6 @@ import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import './style.css'
-
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 export default function Hero()
@@ -73,7 +71,7 @@ export default function Hero()
       <h1 className='tamagotchi relative text-center text-7xl font-bold opacity-0' ref={headerRef}>
         tamagotchi
       </h1>
-      <div>
+      <div className='w-fit h-fit'>
         <img 
           src='sprite/birth/1.png' 
           className='sprite birth1 absolute opacity-0 display-block mx-auto pointer-events-none'

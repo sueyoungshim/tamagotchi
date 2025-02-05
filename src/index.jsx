@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
 import ReactDOM from 'react-dom/client'
-import { Canvas } from '@react-three/fiber'
 import { ReactP5Wrapper } from '@p5-wrapper/react'
 import sketch from './sketch.js'
 
@@ -8,16 +7,21 @@ import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import './style.css'
-import Experience from './Experience.jsx'
-import Typewriter from './Typewriter.jsx'
 import Hero from './Hero.jsx'
+import Typewriter from './Typewriter.jsx'
+import Customize from './Customize.jsx'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 const App = () => {
+  const audioRef = useRef()
+
+  useEffect(() => {
+    audioRef.current.play()
+  })
+
   useGSAP(() => {
     // GSAP SECTIONS
     // gsap.to('.section', {
@@ -46,8 +50,11 @@ const App = () => {
     setOpacity(e.target.value)
   }
 
+
   return (
     <>
+      <audio src="animal-crossing.mp3" ref={ audioRef }></audio>
+
       <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
       <div className='content'>
         
@@ -77,22 +84,8 @@ const App = () => {
           <Typewriter text='and poop, ... of course' />
         </div>
 
-        <div className='h-screen'>
-          <Typewriter text='customize your shell !!' />
-          <input type='color' onChange={handleColorChange}/>
+        <Customize />
 
-          <Canvas
-            className='r3f'
-            camera={{
-              fov: 45,
-              near: 0.1,
-              far: 2000,
-              position: [-3, 1.5, 4],
-            }}
-          >
-            <Experience />
-          </Canvas>
-        </div>
         <div name='adopt' className='h-screen'>
           <button className='outline-dashed rounded-xs p-2'>ADOPT NOW</button>
         </div>
@@ -100,6 +93,5 @@ const App = () => {
     </>
   )
 }
-
 
 root.render(<App />)
