@@ -10,6 +10,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import './style.css'
 import Experience from './Experience.jsx'
+import Typewriter from './Typewriter.jsx'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
@@ -70,6 +71,23 @@ const App = () => {
         }
       })
     })
+
+    // GSAP SECTIONS
+    // gsap.to('.section', {
+    //   scrollTrigger: {
+    //     trigger: '.section',
+    //     snap: 1 / 4,
+    //     start: 'top top',
+    //     end: 'bottom bottom',
+    //     scroller: '.content',
+    //   }
+    // })
+    const tl = gsap.timeline()
+    tl.from('.tamagotchi', { xPercent: -100, duration: 1 })
+      .from('.feed', { xPercent: -100, duration: 1 })
+      .from('.game', { xPercent: -100, duration: 1 })
+      .from('.discipline', { xPercent: -100, duration: 1 })
+
   }, null)
 
   return (
@@ -87,7 +105,7 @@ const App = () => {
           />
         </div>
 
-        <div name='digital-pet' className='h-screen bg-blue-50'>
+        <div name='digital-pet' className='h-screen'>
           <h4 className='test tamagotchi-equation'>
             <p><span className="japanese">tamago たまご</span> <span className="meaning">egg</span></p>
             <p>+ <span className="japanese">uotchi ウオッチ</span> <span className="meaning">watch</span></p>
@@ -95,29 +113,27 @@ const App = () => {
           </h4>
         </div>
 
-        <div name='feed' className='h-screen bg-blue-100'>
-          <h2 className='typewriter text-center' ref={typewriterRef}>feed</h2>
+        <div name='feed' className='feed section h-screen bg-blue-100'>
+          <Typewriter text='feed' />
         </div>
 
-        <div name='game' className='h-screen bg-blue-150'>
-          <h2 className='typewriter text-center'>game</h2>
+        <div name='game' className='game section h-screen bg-blue-200'>
+          <Typewriter text='game' />
         </div>
 
-        <div name='discipline' className='h-screen bg-blue-200'>
-          <h2 className='typewriter text-center'>discipline</h2>
+        <div name='discipline' className='discipline section h-screen bg-blue-300'>
+          <Typewriter text='discipline' />
         </div>
 
-        <div name='poop' className='h-screen bg-blue-250'>
-          <h2 className='typewriter text-center'>
-            and poop, ... of course
-          </h2>
+        <div name='poop' className='poop section h-screen bg-blue-400'>
+          <Typewriter text='and poop, ... of course' />
         </div>
 
-        <div name='customize' className='h-screen bg-blue-300'>
-          <h2 className='typewriter text-center'>customize your shell !!</h2>
+        <div name='customize' className='h-screen'>
+          <Typewriter text='customize your shell !!' />
         </div>
 
-        <div name='adopt' className='h-screen bg-blue-350'>
+        <div name='adopt' className='h-screen'>
           <button className='outline-dashed rounded-xs p-2'>ADOPT NOW</button>
         </div>
       </div>

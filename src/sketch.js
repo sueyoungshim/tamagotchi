@@ -1,13 +1,18 @@
-let gridSize = 20
-let cols, rows
-let colors = [] // Array to store the colors of each grid cell
-
 export default function sketch(p5) {
+  let gridSize = 20
+  let cols, rows
+  let colors = [] // Array to store the colors of each grid cell
+  let hue = 100
+  let color
+
   p5.setup = () => {
     
     p5.createCanvas(p5.windowWidth, p5.windowHeight)
     cols = p5.floor(p5.width / gridSize)
     rows = p5.floor(p5.height / gridSize)
+
+    // p5.colorMode(p5.HSL, 100)
+    color = p5.color(`hsla(${hue}, 100%, 75%, 1)`)
     
     for (let i = 0; i < cols; i++) {
       colors[i] = []
@@ -17,12 +22,14 @@ export default function sketch(p5) {
     }
   }
 
-  p5.draw = () => {
+  p5.mouseMoved = () => {
     if (!p5.focused) return
-    // if (p5.mouseX < 0 || p5.mouseX > p5.width || p5.mouseY < 0 || p5.mouseY > p5.height) return
 
+    p5.frameRate(10)
+    // color = p5.color(`hsla(${hue}, 100%, 75%, 1)`)
+    
     let maxDist = p5.dist(0, 0, p5.width, p5.height) // Maximum distance on the canvas
-  
+    
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         let x = i * gridSize
@@ -36,10 +43,14 @@ export default function sketch(p5) {
   
         // If the mouse is near, change the color to red
         if (d < gridSize * 2) { // A threshold to control how far the ripple extends
-          colors[i][j] = p5.lerpColor(colors[i][j], p5.color(255, 200, 200), lerpFactor * 0.1)
+          colors[i][j] = p5.lerpColor(colors[i][j], color, lerpFactor * 0.1)
         } else {
           // Fade the color back to gray slowly
-          colors[i][j] = p5.lerpColor(colors[i][j], p5.color(255), 0.05)
+          colors[i][j] = p5.lerpColor(colors[i][j], p5.color(255), 0.1)
+          let c = colors[i][j]
+          if (p5.red(c) > 250 && p5.green(c) > 250 && p5.blue(c) > 250) {
+            colors[i][j] = p5.color(255) // Force full white to prevent lingering tint
+          }
         }
   
         p5.fill(colors[i][j])
@@ -49,7 +60,13 @@ export default function sketch(p5) {
     }
   }
 
+  p5.mouseWheel = (event) => {
+    hue = (hue + event.deltaY * 0.1) % 359
+  }
+
   p5.windowResized = () => {
+    console.log(color)
+    
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight)
 
     cols = p5.floor(p5.width / gridSize)
@@ -62,6 +79,8 @@ export default function sketch(p5) {
         colors[i][j] = p5.color(255)
       }
     }
+
+    color = p5.color(`hsla(200, 100%, 75%, 1)`)
   
   }
 }
