@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 function DrawableMesh() {
@@ -57,12 +57,15 @@ function DrawableMesh() {
             onPointerUp={() => setIsPointerDown(false)}
             onPointerMove={handlePointerMove}
         >
-            <boxGeometry args={[1.5, 1.5, 1.5]} />
+            <sphereGeometry />
             {texture && <meshBasicMaterial map={texture} />} 
         </mesh>
     )
 }
 
 export default function Experience() {
-    return <DrawableMesh />
+    return <>
+        <OrbitControls />
+        <DrawableMesh />
+    </>
 }
