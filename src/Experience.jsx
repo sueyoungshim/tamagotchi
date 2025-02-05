@@ -65,7 +65,12 @@ function DrawableMesh() {
 
 export default function Experience() {
     return <>
-        <OrbitControls />
+        <OrbitControls 
+            minDistance={2}
+            maxDistance={10}
+            mouseButtons={{
+                RIGHT: 0, // Right-click for rotation
+            }}/>
         <DrawableMesh />
     </>
 }

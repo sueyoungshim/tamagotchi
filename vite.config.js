@@ -11,7 +11,7 @@ export default {
         tailwindcss(),
         
         // Restart server on static/public file change
-        restart({ restart: [ '../public/**', '../src/**', ] }),
+        restart({ restart: [ '../public/**', ] }),
 
         // React support
         react(),

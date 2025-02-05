@@ -44,7 +44,6 @@ body,
     image-rendering: crisp-edges;
     width: 256px;
     height: 256px;
-    filter: drop-shadow(0 0 0 red);
 }
 
 .r3f, 
