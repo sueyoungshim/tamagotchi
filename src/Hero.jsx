@@ -17,10 +17,10 @@ export default function Hero()
   let paused = false
 
   useEffect(() => {
-    const fadeInOut = (ref) => ({
+    const fadeInOut = (ref, duration=0.5) => ({
       onStart: () => { ref.current.style.opacity = 1 },
       onComplete: () => { ref.current.style.opacity = 0 },
-      duration: 0.5
+      duration: duration
     })
 
     const birthTL = gsap.timeline({ 
@@ -34,7 +34,10 @@ export default function Hero()
               birth3TL.kill()
             }
           })
-            .to(birth2Ref.current, fadeInOut(birth2Ref))
+            .to(birth1Ref.current, fadeInOut(birth1Ref, 0.5))
+            .to(birth2Ref.current, fadeInOut(birth2Ref, 0.15))
+            .to(birth1Ref.current, fadeInOut(birth1Ref, 0.15))
+            .to(birth2Ref.current, fadeInOut(birth2Ref, 0.5))
             .to(birth3Ref.current, { 
               onStart: () => { 
                 birth3Ref.current.style.opacity = 1 
@@ -71,8 +74,8 @@ export default function Hero()
       <h1 className='tamagotchi relative text-center text-7xl font-bold opacity-0' ref={headerRef}>
         tamagotchi
       </h1>
-      <div className='w-fit h-fit'>
-        <img 
+      <div className='absolute w-fit ml-auto mr-auto bottom-0 left-0 right-0'> 
+        <img
           src='sprite/birth/1.png' 
           className='sprite birth1 absolute opacity-0 display-block mx-auto pointer-events-none'
           ref={birth1Ref}
@@ -87,6 +90,7 @@ export default function Hero()
           className='sprite birth3 absolute opacity-0 display-block mx-auto pointer-events-none'
           ref={birth3Ref}
         /> 
+        <div className='sprite'></div>
       </div>
     </div>
   </>

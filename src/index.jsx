@@ -19,7 +19,7 @@ const App = () => {
   const audioRef = useRef()
 
   useEffect(() => {
-    audioRef.current.play()
+    // audioRef.current.play()
   })
 
   useGSAP(() => {

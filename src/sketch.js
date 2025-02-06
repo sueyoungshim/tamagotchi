@@ -17,7 +17,7 @@ export default function sketch(p5) {
     for (let i = 0; i < cols; i++) {
       colors[i] = []
       for (let j = 0; j < rows; j++) {
-        colors[i][j] = p5.color(255)
+        colors[i][j] = p5.color('rgba(255, 255, 255, 0)')
       }
     }
   }
@@ -46,10 +46,10 @@ export default function sketch(p5) {
           colors[i][j] = p5.lerpColor(colors[i][j], color, lerpFactor * 0.1)
         } else {
           // Fade the color back to gray slowly
-          colors[i][j] = p5.lerpColor(colors[i][j], p5.color(255), 0.1)
+          colors[i][j] = p5.lerpColor(colors[i][j], p5.color('rgba(255, 255, 255, 0)'), 0.1)
           let c = colors[i][j]
           if (p5.red(c) > 250 && p5.green(c) > 250 && p5.blue(c) > 250) {
-            colors[i][j] = p5.color(255) // Force full white to prevent lingering tint
+            colors[i][j] = p5.color('rgba(255, 255, 255, 0)') // Force full white to prevent lingering tint
           }
         }
   
@@ -76,7 +76,7 @@ export default function sketch(p5) {
     for (let i = 0; i < cols; i++) {
       colors[i] = []
       for (let j = 0; j < rows; j++) {
-        colors[i][j] = p5.color(255)
+        colors[i][j] = p5.color('rgba(255, 255, 255, 0)')
       }
     }
 
