@@ -66,8 +66,8 @@ body::before {
 {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    width: 256px;
-    height: 256px;
+    /* width: 256px;
+    height: 256px; */
 }
 
 .r3f, 
@@ -158,4 +158,10 @@ color: #000;
 font-weight: bold;
 color: #ffcc00; /* Bright yellow */
 font-size: 1.6rem;
+}
+
+
+.feed
+{
+    cursor: url('/cake.png'), auto;
 }

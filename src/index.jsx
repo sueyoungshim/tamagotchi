@@ -7,8 +7,10 @@ import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import Hero from './Hero.jsx'
 import Typewriter from './Typewriter.jsx'
+
+import Hero from './Hero.jsx'
+import Feed from './Feed.jsx'
 import Customize from './Customize.jsx'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
@@ -68,9 +70,7 @@ const App = () => {
           </h4>
         </div>
 
-        <div className='feed section h-screen bg-blue-100'>
-          <Typewriter text='feed' />
-        </div>
+        <Feed />
 
         <div className='game section h-screen bg-blue-200'>
           <Typewriter text='game' />
