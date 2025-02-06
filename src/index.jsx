@@ -8,6 +8,7 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import Typewriter from './Typewriter.jsx'
+import Filter from './Filter.jsx'
 
 import Hero from './Hero.jsx'
 import Feed from './Feed.jsx'
@@ -56,8 +57,9 @@ const App = () => {
   return (
     <>
       <audio src="animal-crossing.mp3" ref={ audioRef }></audio>
-
       <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
+      <Filter />
+
       <div className='content'>
         
         <Hero />
