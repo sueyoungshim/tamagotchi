@@ -23,7 +23,7 @@ export default function GrainEffect() {
         pixels[i] = value
         pixels[i + 1] = value
         pixels[i + 2] = value
-        pixels[i + 3] = 30 // Opacity
+        pixels[i + 3] = 20 // Opacity
       }
 
       ctx.putImageData(imageData, 0, 0)

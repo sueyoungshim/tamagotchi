@@ -11,6 +11,7 @@ import Typewriter from './Typewriter.jsx'
 import Filter from './Filter.jsx'
 
 import Hero from './Hero.jsx'
+import Tamagotchi from './Tamagotchi.jsx'
 import Feed from './Feed.jsx'
 import Customize from './Customize.jsx'
 
@@ -54,15 +55,17 @@ const App = () => {
   }
 
 
+
   return (
     <>
       <audio src="animal-crossing.mp3" ref={ audioRef }></audio>
       <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
-      <Filter />
+      {/* <Filter /> */}
 
       <div className='content'>
         
-        <Hero />
+        <Hero className='hero'/>
+        <Tamagotchi className='' />
 
         <div className='h-screen'>
           <h4 className='test tamagotchi-equation'>

@@ -24,13 +24,12 @@ export default function Hero()
     })
 
     const birthTL = gsap.timeline({ 
-      repeat: -1,
+      repeat: -1, // repeat indefinitely
       onRepeat: () => {
-        if (paused) {
+        if (paused) { // if user interacts with page, kill animation
           birthTL.kill()
-          const birth3TL = gsap.timeline({
+          const birth3TL = gsap.timeline({ // start new animation
             onComplete: () => {
-              console.log('complete');
               birth3TL.kill()
             }
           })
@@ -42,6 +41,10 @@ export default function Hero()
               onStart: () => { 
                 birth3Ref.current.style.opacity = 1 
                 headerRef.current.style.opacity = 1
+                // capture html2canvas
+
+                // hide <HERO /> component
+                
               }
             })
         }
@@ -49,8 +52,6 @@ export default function Hero()
     })
     .to(birth1Ref.current, fadeInOut(birth1Ref))
     .to(birth2Ref.current, fadeInOut(birth2Ref))
-
-
   }, [])
 
   const stopAnimation = () => {
@@ -69,25 +70,37 @@ export default function Hero()
     }
   }, [])
 
+  useGSAP(() => {
+    ScrollTrigger.create({
+      trigger: '.birth',
+      start: '50% 50%',
+      scroller: '.content',
+      markers: true,
+      onEnter: () => gsap.set('.hero', { opacity: 0 }), // Instantly hide
+      onLeaveBack: () => gsap.set('.hero', { opacity: 1 }) // Show again when scrolling back up
+    })
+  }, [])
+
+
   return <>
-    <div className='h-screen'>
+    <div className='hero h-screen'>
       <h1 className='tamagotchi relative text-center text-7xl font-bold opacity-0' ref={headerRef}>
         tamagotchi
       </h1>
       <div className='absolute w-fit ml-auto mr-auto bottom-0 left-0 right-0'> 
         <img
           src='sprite/birth/1.png' 
-          className='sprite birth1 absolute opacity-0 display-block mx-auto pointer-events-none'
+          className='birth absolute opacity-0 display-block mx-auto pointer-events-none'
           ref={birth1Ref}
         /> 
         <img 
           src='sprite/birth/2.png' 
-          className='sprite birth1 absolute opacity-0 display-block mx-auto pointer-events-none'
+          className='birth absolute opacity-0 display-block mx-auto pointer-events-none'
           ref={birth2Ref}
         /> 
         <img 
           src='sprite/birth/3.png' 
-          className='sprite birth3 absolute opacity-0 display-block mx-auto pointer-events-none'
+          className='birth absolute opacity-0 display-block mx-auto pointer-events-none'
           ref={birth3Ref}
         /> 
         <div className='sprite'></div>
