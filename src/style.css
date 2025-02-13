@@ -43,12 +43,15 @@ body,
     height: 100%;
     background: white;
 
-    /* -webkit-touch-callout: none;
+    -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; */
+    user-select: none;
+
+    /* font-family: pixel; */
+
 }
 
 
@@ -64,9 +67,8 @@ body::before {
 
 .sprite
 {
-    
-    width: 256px;
-    height: 256px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
 }
 
 .birth
@@ -92,6 +94,12 @@ body::before {
 {
     overflow-y: scroll;
     --font-color: #000;
+    scroll-snap-type: y mandatory;
+}
+
+.section
+{
+    scroll-snap-align: start;
 }
 
 .r3f
@@ -172,5 +180,5 @@ font-size: 1.6rem;
 
 .feed
 {
-    cursor: url('/cake.png'), auto;
+    cursor: url('/sprite/cake.png'), auto;
 }

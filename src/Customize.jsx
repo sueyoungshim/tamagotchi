@@ -24,8 +24,9 @@ export default function Customize() {
 
   return <>
     <div className='h-screen'>
-      <Typewriter text='customize your shell !!' />
-      <input type='color' onChange={handleColorChange}/>
+
+      {/* <Typewriter text='customize your shell !!' className='z-10' /> */}
+      {/* <input type='color' onChange={handleColorChange} /> */}
 
       <Canvas
         className='r3f'

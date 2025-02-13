@@ -20,54 +20,22 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 const App = () => {
-  const audioRef = useRef()
-
-  useEffect(() => {
-    // audioRef.current.play()
-  })
-
-  useGSAP(() => {
-    // GSAP SECTIONS
-    // gsap.to('.section', {
-    //   scrollTrigger: {
-    //     trigger: '.section',
-    //     snap: 1 / 4,
-    //     start: 'top top',
-    //     end: 'bottom bottom',
-    //     scroller: '.content',
-    //   }
-    // })
-    const tl = gsap.timeline()
-    tl.from('.tamagotchi', { xPercent: -100, duration: 1 })
-      .from('.feed', { xPercent: -100, duration: 1 })
-      .from('.game', { xPercent: -100, duration: 1 })
-      .from('.discipline', { xPercent: -100, duration: 1 })
-
-  }, null)
-
-  const [color, setColor] = useState('#ffffff')
-  const [opacity, setOpacity] = useState(0.5)
-  const handleColorChange = (e) => {
-    setColor(e.target.value)
-  }
-  const handleOpacityChange = (e) => {
-    setOpacity(e.target.value)
-  }
-
-
-
   return (
     <>
-      <audio src="animal-crossing.mp3" ref={ audioRef }></audio>
       <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
-      {/* <Filter /> */}
+      <Filter />
 
-      <div className='content'>
+      <div className='r3f z-0'>
+        <Customize />
+      </div>
+
+
+      <div className='content z-1'>
         
-        <Hero className='hero'/>
-        <Tamagotchi className='' />
+        <Hero className='hero section'/>
+        {/* <Tamagotchi className='' /> */}
 
-        <div className='h-screen'>
+        <div className='introduction section h-screen'>
           <h4 className='test tamagotchi-equation'>
             <p><span className="japanese">tamago たまご</span> <span className="meaning">egg</span></p>
             <p>+ <span className="japanese">uotchi ウオッチ</span> <span className="meaning">watch</span></p>
@@ -89,9 +57,9 @@ const App = () => {
           <Typewriter text='and poop, ... of course' />
         </div>
 
-        <Customize />
+        {/* <Customize /> */}
 
-        <div name='adopt' className='h-screen'>
+        <div name='adopt section' className='h-screen'>
           <button className='outline-dashed rounded-xs p-2'>ADOPT NOW</button>
         </div>
       </div>

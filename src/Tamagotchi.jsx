@@ -14,26 +14,30 @@ import './style.css'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
-export default function Customize() {
+export default function Tamagotchi() {
   const [texture, setTexture] = useState(null)
 
   async function renderHeroToCanvas(setTexture) {
-    const heroElement = document.getElementsByClassName('hero') // Ensure this ID is in your Hero component
+    const heroElement = document.querySelector('.hero') // Get first matching element
     if (!heroElement) return
   
+    // Wait for html2canvas to render
     const canvas = await html2canvas(heroElement, { backgroundColor: null })
     const texture = new THREE.CanvasTexture(canvas)
   
     setTexture(texture)
+  
+    // Hide the Hero component after rendering
+    gsap.to(heroElement, { opacity: 0, duration: 0.5 })
   }
+  
 
   const tamagotchi = useGLTF('tamagotchi.glb')
-  console.log(tamagotchi);
 
   tamagotchi.scene.children.forEach(mesh => {
     mesh.material = new THREE.MeshMatcapMaterial()
-    console.log(mesh)
   })
+
 
   return <>
     <div className='h-screen'>
@@ -43,18 +47,18 @@ export default function Customize() {
           fov: 45,
           near: 0.1,
           far: 2000,
-          position: [-3, 1.5, 4],
+          position: [0, 0, 4],
         }}
       >
-        <OrbitControls 
+        {/* <OrbitControls 
           minDistance={4}
           maxDistance={10}
-        />
-        {/* <mesh>
+        /> */}
+        <mesh>
           <planeGeometry />
           <meshBasicMaterial map={texture} />
-        </mesh> */}
-        <primitive object={ tamagotchi.scene } />
+        </mesh>
+        {/* <primitive object={ tamagotchi.scene } /> */}
       </Canvas>
     </div>
   </>

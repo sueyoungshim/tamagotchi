@@ -8,6 +8,7 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 export default function Hero()
 {
+  const audioRef = useRef()
   const headerRef = useRef()
 
   const birth1Ref = useRef()
@@ -25,7 +26,7 @@ export default function Hero()
 
     const birthTL = gsap.timeline({ 
       repeat: -1, // repeat indefinitely
-      onRepeat: () => {
+      onRepeat: async () => {
         if (paused) { // if user interacts with page, kill animation
           birthTL.kill()
           const birth3TL = gsap.timeline({ // start new animation
@@ -38,10 +39,16 @@ export default function Hero()
             .to(birth1Ref.current, fadeInOut(birth1Ref, 0.15))
             .to(birth2Ref.current, fadeInOut(birth2Ref, 0.5))
             .to(birth3Ref.current, { 
-              onStart: () => { 
+              onStart: async () => { 
                 birth3Ref.current.style.opacity = 1 
                 headerRef.current.style.opacity = 1
+                // audioRef.current.play()
+
                 // capture html2canvas
+                // await renderHeroToCanvas(setTexture) // Capture and apply texture
+
+                // Hide <Hero /> component
+                gsap.to('.hero', { opacity: 0, duration: 0.5 })
 
                 // hide <HERO /> component
                 
@@ -70,23 +77,31 @@ export default function Hero()
     }
   }, [])
 
-  useGSAP(() => {
-    ScrollTrigger.create({
-      trigger: '.birth',
-      start: '50% 50%',
-      scroller: '.content',
-      markers: true,
-      onEnter: () => gsap.set('.hero', { opacity: 0 }), // Instantly hide
-      onLeaveBack: () => gsap.set('.hero', { opacity: 1 }) // Show again when scrolling back up
-    })
-  }, [])
+  // useGSAP(() => {
+  //   ScrollTrigger.create({
+  //     trigger: '.birth',
+  //     start: '50% 50%',
+  //     scroller: '.content',
+  //     markers: true,
+  //     onEnter: () => gsap.set('.hero', { opacity: 0 }), // Instantly hide
+  //     onLeaveBack: () => gsap.set('.hero', { opacity: 1 }) // Show again when scrolling back up
+  //   })
+  // }, [])
 
 
   return <>
     <div className='hero h-screen'>
+      <audio src="animal-crossing.mp3" ref={ audioRef }></audio>
+
       <h1 className='tamagotchi relative text-center text-7xl font-bold opacity-0' ref={headerRef}>
         tamagotchi
       </h1>
+      <button 
+        className='outline-dashed rounded-xs p-2 ml-auto mr-auto'
+        onClick={() => {
+          // TODO: SET BUTTON TO DISAPPEAR
+        }}
+        >start</button>
       <div className='absolute w-fit ml-auto mr-auto bottom-0 left-0 right-0'> 
         <img
           src='sprite/birth/1.png' 

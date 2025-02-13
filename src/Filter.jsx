@@ -29,7 +29,7 @@ export default function GrainEffect() {
       ctx.putImageData(imageData, 0, 0)
     }
 
-    setInterval(generateNoise, 50) // Refresh every 50ms for animation
+    setInterval(generateNoise, 200) // Refresh every 50ms for animation
   }, [])
 
   return null
