@@ -61,6 +61,7 @@ export default function Sprite({ isLoaded })
     const audio = new Audio('animal-crossing.mp3')
     audio.play()
     document.getElementsByClassName('spriteLayer')[0].style.display = 'none'
+    document.getElementsByClassName('r3fLayer')[0].style.opacity = 100
 
   }
 
@@ -74,8 +75,13 @@ export default function Sprite({ isLoaded })
         loading tamagotchi ...
       </div>
 
-      <div className='absolute opacity-0' ref={enterMusicRef} onClick={handleClick}>
-        click to enter with music
+      
+      <div
+        className="absolute opacity-0 top-0 left-0 h-screen w-screen flex items-center justify-center cursor-pointer"
+        ref={enterMusicRef}
+        onClick={handleClick}
+      >
+        <div className="text-center">click to enter with music</div>
       </div>
 
       

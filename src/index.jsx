@@ -74,23 +74,28 @@ const App = () => {
 
   return (
     <>
-      <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
-      <Filter />
 
-      <div className='r3f z-0'>
-      {/* <div className={`r3f ${isCustomizeFocused ? 'z-2' : 'z-0'}`}> */}
-      <Tamagotchi 
-          screenTexture={screenTexture}
-          color={color} setColor={setColor}
-          size={size} setSize={setSize}
-          shape={shape} setShape={setShape}
-          isCustomizeFocused={isCustomizeFocused}
-          outerShellColor={outerShellColor} setOuterShellColor={setOuterShellColor}
-          innerShellColor={innerShellColor} setInnerShellColor={setInnerShellColor}
-          buttonColors={buttonColors} setButtonColors={setButtonColors}
-          isLoaded={isLoaded} setIsLoaded={setIsLoaded}
-        />
+      <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
+      
+      {/* Noise Filter (Should be below the Tamagotchi) */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Filter />
       </div>
+
+    {/* Tamagotchi 3D Model (Should be above the noise filter) */}
+    <div className="absolute inset-0 z-10">
+      <Tamagotchi 
+        screenTexture={screenTexture}
+        color={color} setColor={setColor}
+        size={size} setSize={setSize}
+        shape={shape} setShape={setShape}
+        isCustomizeFocused={isCustomizeFocused}
+        outerShellColor={outerShellColor} setOuterShellColor={setOuterShellColor}
+        innerShellColor={innerShellColor} setInnerShellColor={setInnerShellColor}
+        buttonColors={buttonColors} setButtonColors={setButtonColors}
+        isLoaded={isLoaded} setIsLoaded={setIsLoaded}
+      />
+    </div>
 
       {/* <div className='spriteLayer z-1'>
         <Sprite />

@@ -4,17 +4,8 @@ export default function GrainEffect() {
   const canvasRef = useRef(null)
 
   useEffect(() => {
-    const canvas = document.createElement('canvas')
-    canvas.className = 'filter'
-    canvas.style.position = 'fixed'
-    canvas.style.top = '0'
-    canvas.style.left = '0'
-    canvas.style.pointerEvents = 'none'
-    canvas.style.zIndex = '9999'
-    document.body.appendChild(canvas)
-
+    const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
-    canvasRef.current = canvas
 
     function resizeCanvas() {
       canvas.width = window.innerWidth
@@ -44,9 +35,13 @@ export default function GrainEffect() {
     return () => {
       clearInterval(interval)
       window.removeEventListener('resize', resizeCanvas)
-      document.body.removeChild(canvas)
     }
   }, [])
 
-  return null
+  return (
+    <canvas 
+      ref={canvasRef} 
+      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+    />
+  )
 }
