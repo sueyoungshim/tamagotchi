@@ -3,16 +3,21 @@ import ReactDOM from 'react-dom/client'
 import { ReactP5Wrapper } from '@p5-wrapper/react'
 import sketch from './sketch.js'
 
+import * as htmlToImage from 'html-to-image';
+import * as THREE from 'three'
+
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import Typewriter from './Typewriter.jsx'
 import Filter from './Filter.jsx'
+import Sprite from './Sprite.jsx'
 
 import Hero from './Hero.jsx'
-import Tamagotchi from './Tamagotchi.jsx'
+import Intro from './Intro.jsx'
 import Feed from './Feed.jsx'
+import Tamagotchi from './Tamagotchi.jsx'
 import Customize from './Customize.jsx'
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
@@ -20,49 +25,105 @@ gsap.registerPlugin(useGSAP, ScrollTrigger)
 const root = ReactDOM.createRoot(document.querySelector('#root'))
 
 const App = () => {
+  const [screenTexture, setScreenTexture] = useState(null)
+  const [color, setColor] = useState('#85A3FF')
+  const [size, setSize] = useState(10)
+  const [shape, setShape] = useState('round')
+  const [isCustomizeFocused, setIsCustomizeFocused] = useState(false)
+
+  const [outerShellColor, setOuterShellColor] = useState('#75fffd')
+  const [innerShellColor, setInnerShellColor] = useState('#ffe957')
+  const [buttonColors, setButtonColors] = useState({
+    left: '#ffa8a8',
+    right: '#aa99ff',
+    center: '#52ff94'
+  })
+
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  async function renderHeroToCanvas() {
+    const heroElement = document.querySelector('.spriteLayer')
+    if (!heroElement) return
+  
+    try {
+      const dataUrl = await htmlToImage.toPng(heroElement) 
+  
+      const img = new Image()
+      img.src = dataUrl
+      // img.style.position = 'fixed'
+      // img.style.bottom = '10px'
+      // img.style.right = '10px'
+      // img.style.border = '2px solid red'
+      // img.style.zIndex = '10000'
+      // document.body.appendChild(img)
+  
+      const loader = new THREE.TextureLoader()
+      loader.load(dataUrl, (texture) => {
+        // texture.wrapS = THREE.RepeatWrapping;
+        // texture.wrapT = THREE.RepeatWrapping;
+        // texture.repeat.set( 4, 4 )
+
+        texture.needsUpdate = true
+        setScreenTexture(texture) 
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+  
+
   return (
     <>
       <ReactP5Wrapper sketch={sketch}></ReactP5Wrapper>
       <Filter />
 
       <div className='r3f z-0'>
-        <Customize />
+      {/* <div className={`r3f ${isCustomizeFocused ? 'z-2' : 'z-0'}`}> */}
+      <Tamagotchi 
+          screenTexture={screenTexture}
+          color={color} setColor={setColor}
+          size={size} setSize={setSize}
+          shape={shape} setShape={setShape}
+          isCustomizeFocused={isCustomizeFocused}
+          outerShellColor={outerShellColor} setOuterShellColor={setOuterShellColor}
+          innerShellColor={innerShellColor} setInnerShellColor={setInnerShellColor}
+          buttonColors={buttonColors} setButtonColors={setButtonColors}
+          isLoaded={isLoaded} setIsLoaded={setIsLoaded}
+        />
       </div>
 
+      {/* <div className='spriteLayer z-1'>
+        <Sprite />
+      </div> */}
 
-      <div className='content z-1'>
-        
-        <Hero className='hero section'/>
-        {/* <Tamagotchi className='' /> */}
-
-        <div className='introduction section h-screen'>
-          <h4 className='test tamagotchi-equation'>
-            <p><span className="japanese">tamago たまご</span> <span className="meaning">egg</span></p>
-            <p>+ <span className="japanese">uotchi ウオッチ</span> <span className="meaning">watch</span></p>
-            <p>= <span className="added">tamagotchi たまごっち</span> <span className="meaning">digital pet</span></p>
-          </h4>
-        </div>
-
+      {/* <div className='content z-2'> */}
+{/*         
+        <Hero onStart={ renderHeroToCanvas }/>
+        <Intro />
         <Feed />
 
-        <div className='game section h-screen bg-blue-200'>
-          <Typewriter text='game' />
+        <div className='play section h-screen'>
+          <Typewriter text='play' />
         </div>
 
-        <div className='discipline section h-screen bg-blue-300'>
-          <Typewriter text='discipline' />
+        <div className='discipline section h-screen'>
+          <Typewriter text='train' />
         </div>
 
-        <div className='poop section h-screen bg-blue-400'>
-          <Typewriter text='and poop, ... of course' />
-        </div>
+        <div className='poop section h-screen'>
+          <Typewriter text='and messy business ...' />
+        </div> */}
 
-        {/* <Customize /> */}
+        {/* <Customize 
+          setIsCustomizeFocused={setIsCustomizeFocused}
+        /> */}
 
-        <div name='adopt section' className='h-screen'>
+        {/* <div className='adopt section h-screen'>
           <button className='outline-dashed rounded-xs p-2'>ADOPT NOW</button>
         </div>
-      </div>
+         */}
+
+      {/* </div> */}
     </>
   )
 }

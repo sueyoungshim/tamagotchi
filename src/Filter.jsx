@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function GrainEffect() {
+  const canvasRef = useRef(null)
+
   useEffect(() => {
     const canvas = document.createElement('canvas')
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    canvas.className = 'filter'
     canvas.style.position = 'fixed'
     canvas.style.top = '0'
     canvas.style.left = '0'
@@ -13,6 +14,13 @@ export default function GrainEffect() {
     document.body.appendChild(canvas)
 
     const ctx = canvas.getContext('2d')
+    canvasRef.current = canvas
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+      generateNoise()
+    }
 
     function generateNoise() {
       const imageData = ctx.createImageData(canvas.width, canvas.height)
@@ -29,7 +37,15 @@ export default function GrainEffect() {
       ctx.putImageData(imageData, 0, 0)
     }
 
-    setInterval(generateNoise, 200) // Refresh every 50ms for animation
+    resizeCanvas()
+    const interval = setInterval(generateNoise, 200) // Refresh noise every 200ms
+    window.addEventListener('resize', resizeCanvas)
+
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('resize', resizeCanvas)
+      document.body.removeChild(canvas)
+    }
   }, [])
 
   return null

@@ -69,17 +69,23 @@ body::before {
 {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
+    pointer-events: none;
 }
 
 .birth
 {
     image-rendering: pixelated;
     image-rendering: crisp-edges;
-    width: 256px;
-    height: 256px;
+    width: 128px;
+    height: 128px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .r3f, 
+.spriteLayer,
 .content
 {
     position: fixed;
@@ -102,17 +108,11 @@ body::before {
     scroll-snap-align: start;
 }
 
-.r3f
-{
-    /* touch-action: none; */
-    /* z-index: -1; */
-}
-
 .typewriter-container
 {
     /* container style */
     font-weight: bold;
-    font-size: 5rem;
+    font-size: 3rem;
     height: 1em;
     display: flex;
     align-items: center;
@@ -140,12 +140,12 @@ from, to { border-color: transparent }
 
 .tamagotchi-equation 
 {
-    font-family: pixel; /* Change to a pixel font for a retro look */
+    font-family: pixel;
     font-size: 1.5rem;
-    text-align: center;
+    text-align: right;
     line-height: 1.6;
     color: #000;
-    background-color: #fff9db; /* Light pastel yellow (Tamagotchi theme) */
+    background-color: #fff9db; 
     padding: 1rem;
     border-radius: 10px;
     display: inline-block;
@@ -161,7 +161,7 @@ margin: 0.5rem 0;
 {
 font-family: pixel-japanese;
 font-weight: bold;
-color: #ff6699; /* Pink Tamagotchi theme */
+color: #ff6699; 
 }
 
 .meaning 
@@ -170,15 +170,55 @@ font-style: italic;
 color: #000;
 }
 
-.added 
-{
-font-weight: bold;
-color: #ffcc00; /* Bright yellow */
-font-size: 1.6rem;
-}
-
+.line {
+    display: block;
+    width: 100%; 
+    height: 2px;
+    background-color: black;
+    margin: 10px 0; 
+  }
 
 .feed
 {
     cursor: url('/sprite/cake.png'), auto;
+}
+
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: var(--brush-color, #ff0000);
+    outline: none;
+    transition: background 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: var(--brush-radius, 20px);
+    height: var(--brush-radius, 20px);
+    /* width: 20px;
+    height: 20px; */
+    background: var(--brush-color, #ff0000);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--brush-color, #ff0000);
+    border-radius: var(--brush-radius, 50%);
+    cursor: pointer;
+}
+
+.shapeButton
+{
+    color: --brush-color;
+}
+
+.info
+{
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }

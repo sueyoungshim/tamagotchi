@@ -27,7 +27,7 @@ export default function Feed() {
   }
 
   return (
-    <div ref={containerRef} className='feed section h-screen bg-blue-100 cursor-pointer relative' onClick={handleClick}>
+    <div ref={containerRef} className='feed section h-screen cursor-pointer relative' onClick={handleClick}>
       <Typewriter text='feed' />
     </div>
   )

@@ -1,44 +1,23 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react'
-import { Canvas } from '@react-three/fiber'
-
-import { gsap } from 'gsap'
-import { useGSAP } from '@gsap/react'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-import './style.css'
-import Experience from './Experience.jsx'
+import React, { useEffect, useRef, useState } from 'react'
 import Typewriter from './Typewriter.jsx'
 
-gsap.registerPlugin(useGSAP, ScrollTrigger)
+export default function Customize({ setIsCustomizeFocused }) {
+  const sectionRef = useRef(null)
 
-export default function Customize() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsCustomizeFocused(entry.isIntersecting),
+      { threshold: 0.5 }
+    )
+    if (sectionRef.current) observer.observe(sectionRef.current)
+    return () => observer.disconnect()
+  }, [])
 
-  const [color, setColor] = useState('#ffffff')
-  const [opacity, setOpacity] = useState(0.5)
-  const handleColorChange = (e) => {
-    setColor(e.target.value)
-  }
-  const handleOpacityChange = (e) => {
-    setOpacity(e.target.value)
-  }
-
-  return <>
-    <div className='h-screen'>
-
-      {/* <Typewriter text='customize your shell !!' className='z-10' /> */}
-      {/* <input type='color' onChange={handleColorChange} /> */}
-
-      <Canvas
-        className='r3f'
-        camera={{
-          fov: 45,
-          near: 0.1,
-          far: 2000,
-          position: [-3, 1.5, 4],
-        }}
-      >
-        <Experience />
-      </Canvas>
+  return (
+    <div className='customize section h-screen' ref={sectionRef}>
+      <Typewriter text='customize' />
+      
     </div>
-  </>
+  )
 }
+
