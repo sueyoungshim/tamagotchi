@@ -137,7 +137,7 @@ export default function Tamagotchi({
           onClick={takePicture}
           className="info absolute bottom-5 left-1/2 transform -translate-x-1/2"
         >
-          📸 click here to take a Picture
+          📸 click here to take a Picture (download)
         </button>
       </div>
     </div>
