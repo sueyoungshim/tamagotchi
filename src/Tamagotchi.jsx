@@ -18,7 +18,6 @@ export default function Tamagotchi({
   isLoaded, setIsLoaded,
   isCustomizeFocused 
 }) {
-  const containerRef = useRef(null)
   const canvasRef = useRef(null)
 
   const takePicture = () => {
