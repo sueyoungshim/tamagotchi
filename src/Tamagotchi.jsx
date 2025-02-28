@@ -79,7 +79,7 @@ export default function Tamagotchi({
                   key={value}
                   onClick={() => setShape(value)}
                   className={`shapeButton w-10 h-10 flex items-center justify-center rounded-lg transition-all 
-                  text-[color:var(--brush-color)] font-sans
+                  text-[color:var(--brush-color)] font-sans info
                   ${shape === value ? 'border scale-110' : 'hover:border'}`}
                   style={{ '--brush-color': color }}
                 >
@@ -135,7 +135,7 @@ export default function Tamagotchi({
         </div>
         <button
           onClick={takePicture}
-          className="info absolute bottom-5 left-1/2 transform -translate-x-1/2"
+          className="info absolute bottom-5 left-1/2 transform -translate-x-1/2 hover:scale-110"
         >
           📸 click here to take a Picture (download)
         </button>
