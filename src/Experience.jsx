@@ -200,7 +200,7 @@ export default function Experience({
 
       return (
         <>
-          <ambientLight intensity={3}/>
+          <ambientLight intensity={4}/>
           <directionalLight />
           <OrbitControls 
             // enableZoom={false}

@@ -19,23 +19,17 @@ export default function Tamagotchi({
   isCustomizeFocused 
 }) {
   const containerRef = useRef(null)
+  const canvasRef = useRef(null)
 
-  const handleClick = (e) => {
-    if (!containerRef.current) return
+  const takePicture = () => {
+    const dataURL = canvasRef.current.toDataURL('image/png')
 
-    const cake = document.createElement('img')
-    cake.src = '/sprite/cake.gif'
-    cake.className = 'sprite absolute pointer-events-none'
-    cake.style.position = 'absolute'
-    cake.style.top = `${e.clientY}px`
-    cake.style.left = `${e.clientX}px`
-
-    containerRef.current.appendChild(cake)
-
-    // Remove cake after animation
-    setTimeout(() => {
-      cake.remove()
-    }, 2000)
+    const link = document.createElement('a')
+    link.href = dataURL
+    link.download = `tamagotchi-${Date.now()}.png`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
   }
 
   return (
@@ -46,8 +40,9 @@ export default function Tamagotchi({
 
       <div className={`r3fLayer absolute inset-0 transition-opacity duration-500 ${isCustomizeFocused ? 'opacity-100' : 'opacity-0'}`}>
         
-        <div className="absolute top-5 left-1/2 transform -translate-x-1/2">
+        <div className="absolute top-5 left-1/2 transform -translate-x-1/2 text-center">
           <Typewriter text="Customize your Tamagotchi" />
+          {/* <div className='mt-2'>Paint your Tamagotchi</div> */}
         </div>
 
         <div className="fixed bottom-5 right-5  p-4 rounded-2xl shadow-lg space-y-3 z-10">
@@ -114,6 +109,7 @@ export default function Tamagotchi({
         </div>
 
         <Canvas
+          ref={canvasRef}
           className="absolute inset-0"
           camera={{
             fov: 45,
@@ -135,9 +131,15 @@ export default function Tamagotchi({
           />
         </Canvas>
 
-        <div className="info absolute bottom-10 left-1/2 transform -translate-x-1/2">
+        <div className="info absolute bottom-15 not-only-of-type:left-1/2 transform -translate-x-1/2">
           right-click to rotate
         </div>
+        <button
+          onClick={takePicture}
+          className="info absolute bottom-5 left-1/2 transform -translate-x-1/2"
+        >
+          📸 click here to take a Picture
+        </button>
       </div>
     </div>
 
