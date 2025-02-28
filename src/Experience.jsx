@@ -110,6 +110,7 @@ function DrawableMesh({ brushColor, brushSize, brushShape, outerShellColor, inne
 
     return (
         <>
+            {/* Outer Shell (Glossy Plastic) */}
             <primitive 
                 object={meshes['outershell']}
                 onPointerDown={() => setIsPointerDown(true)}
@@ -117,33 +118,61 @@ function DrawableMesh({ brushColor, brushSize, brushShape, outerShellColor, inne
                 onPointerMove={handlePointerMove}
                 onClick={handleClick}
             >
-                {/* {texture && <meshMatcapMaterial map={texture} />}
-                <meshMatcapMaterial color={outerShellColor} /> */}
-
-                {texture && <meshMatcapMaterial map={texture}/>}
-                {/* <meshMatcapMaterial  /> */}
+                {texture && (
+                    <meshStandardMaterial
+                        map={texture}
+                        roughness={0.2}
+                        metalness={0.5} 
+                        clearcoat={0.8}
+                        clearcoatRoughness={0.1}
+                    />
+                )}
             </primitive>
 
+            {/* Inner Shell */}
             <primitive object={meshes['innershell']}>
-                <meshMatcapMaterial color={innerShellColor} />
+                <meshStandardMaterial
+                    color={innerShellColor}
+                    roughness={0.2}
+                    metalness={0.5}
+                    clearcoat={0.8} 
+                    clearcoatRoughness={0.1}
+                />
             </primitive>
 
+            {/* Other Parts */}
             <primitive object={meshes['screen']}></primitive>
 
             <primitive object={meshes['ring']}>
-                <meshMatcapMaterial color={outerShellColor}/>
+                <meshStandardMaterial
+                    color={outerShellColor}
+                    roughness={0.2}
+                    metalness={0.5}
+                />
             </primitive>
 
             <primitive object={meshes['leftbutton']}>
-                <meshMatcapMaterial color={buttonColors.left} />
+                <meshStandardMaterial 
+                    color={buttonColors.left}
+                    roughness={0.2}
+                    metalness={0.5}
+                />
             </primitive>
 
             <primitive object={meshes['rightbutton']}>
-                <meshMatcapMaterial color={buttonColors.right} />
+            <meshStandardMaterial 
+                    color={buttonColors.right}
+                    roughness={0.2}
+                    metalness={0.5}
+                />
             </primitive>
 
             <primitive object={meshes['centerbutton']}>
-                <meshMatcapMaterial color={buttonColors.center} />
+            <meshStandardMaterial 
+                    color={buttonColors.center}
+                    roughness={0.2}
+                    metalness={0.5}
+                />
             </primitive>
         </>
     )
@@ -171,7 +200,7 @@ export default function Experience({
 
       return (
         <>
-          <ambientLight />
+          <ambientLight intensity={3}/>
           <directionalLight />
           <OrbitControls 
             // enableZoom={false}
