@@ -10,13 +10,13 @@
     /* src: url('fonts/english/minecraft.ttf'); */
     /* src: url('fonts/english/perfect-dos-vga.ttf'); */
     /* src: url('fonts/english/pixeled.ttf'); */
-    src: url('fonts/english/vcr-osd-mono.ttf');
+    src: url('/fonts/english/vcr-osd-mono.ttf');
 }
 
 @font-face 
 {
     font-family: 'pixel-japanese';
-    src: url('fonts/japanese/madoufutomaru.ttf')
+    src: url('/fonts/japanese/madoufutomaru.ttf')
 }
 
 @property --w_raw {
